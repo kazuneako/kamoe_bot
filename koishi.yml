@@ -1,0 +1,85 @@
+plugins:
+  group:server:
+    server:j8c4ci:
+      port: 5140
+      maxPort: 5149
+    ~server-satori:d7ak5s: {}
+    ~server-temp:3rorp9: {}
+  group:basic:
+    ~admin:0csacd: {}
+    ~bind:1zil5k: {}
+    commands:px9jpz: {}
+    ~help:3p10sa: {}
+    http:4e2k7d: {}
+    ~inspect:m0fwgd: {}
+    locales:qtqzb7: {}
+    proxy-agent:mg1ehc: {}
+    rate-limit:xo6e8h: {}
+    telemetry:l2tcre: {}
+  group:console:
+    actions:5y6rci: {}
+    analytics:3w72no: {}
+    android:kvho7d:
+      $if: env.KOISHI_AGENT?.includes('Android')
+    ~auth:f2qdi8: {}
+    config:jt4sao: {}
+    console:fyk8rs:
+      open: true
+    dataview:3suntj: {}
+    desktop:dogy2f:
+      $if: env.KOISHI_AGENT?.includes('Desktop')
+    explorer:fws2no: {}
+    logger:bq8our: {}
+    insight:o6tnth: {}
+    market:c6xgbt:
+      search:
+        endpoint: https://registry.koishi.chat/index.json
+    notifier:ff66mm: {}
+    oobe:zbag14: {}
+    sandbox:nvr56c: {}
+    status:xpr3q3: {}
+    theme-vanilla:9jnzcn: {}
+  group:storage:
+    ~database-mongo:9anm5u:
+      database: koishi
+    ~database-mysql:4prjz5:
+      database: koishi
+    ~database-postgres:yy9jk9:
+      database: koishi
+    database-sqlite:5vwcbq:
+      path: data/koishi.db
+    assets-local:w7qxvl: {}
+  group:adapter:
+    ~adapter-dingtalk:9uqaml: {}
+    ~adapter-discord:rz2l58: {}
+    ~adapter-kook:6i3cx0: {}
+    ~adapter-lark:fihz2u: {}
+    ~adapter-line:t62rfs: {}
+    ~adapter-mail:41ps59: {}
+    ~adapter-matrix:py3uhs: {}
+    ~adapter-qq:snspht: {}
+    ~adapter-satori:aj34ke: {}
+    ~adapter-slack:whia6k: {}
+    ~adapter-telegram:04k1zv: {}
+    ~adapter-wechat-official:ozcd29: {}
+    ~adapter-wecom:2x4xm0: {}
+    ~adapter-whatsapp:r22tpt: {}
+    ~adapter-zulip:mkkx2a: {}
+  group:develop:
+    $if: env.NODE_ENV === 'development'
+    hmr:odmw85:
+      root: .
+  puppeteer:rpwwbc: {}
+  friendship-tabulate:n5h5tr: {}
+  group-invite:mpygoc:
+    rows:
+      admin: true
+      member: true
+    masterId: '2691827580'
+    official: '699930475'
+  adapter-onebot:xbtwmo:
+    selfId: '2691827580'
+prefix:
+  - '%'
+nickname:
+  - 花萌
