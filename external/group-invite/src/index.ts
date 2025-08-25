@@ -1,4 +1,4 @@
-import { Context, h } from 'koishi'
+﻿import { Context, h } from 'koishi'
 import { Config } from 'koishi/lib/worker/daemon';
 
 export const name = 'group-invite'
@@ -52,17 +52,20 @@ export function apply(ctx: Context,config:Config) {
   //   // dodatabase();
   //   // ctx.database.drop(memberEvents)
   // })
-  ctx.on('guild-request', (session) => {
-    async function sendmsg() {
-      // console.info(session)
-      let user=await session.onebot.getStrangerInfo(session.event.user.id).then(result=>{
+  ctx.on('guild-request', async (session) => {
+      //console.info(session)
+      let user=await session.onebot.getStrangerInfo(session.event.user.id,false).then(result=>{
         return result;
       })
-      // let guild=await session.onebot.getGroupInfo(session.event.channel.id,true).then(result=>{
-      //   return result;
-      // })
-      // let content='群邀请来自:\nQQ:'+user["username"]+'('+session.event.user.id+')\n群聊:'+guild["guildName"]+'('+session.event.channel.id+')';
-      let content='群邀请来自:\nQQ:'+user["nickname"]+'('+session.event.user.id+')\n群聊:('+session.event.channel.id+')';
+       let guild=await session.onebot.getGroupInfo(session.event.channel.id,true).then(result=>{
+         return result;
+       })
+       //console.info(1111)
+       //console.info(user)
+       //console.info(2222)
+       //console.info(guild)
+      // let content='群邀请来自:\nQQ:'+user["nickname"]+'('+session.event.user.id+')\n群聊:'+guild["guildName"]+'('+session.event.channel.id+')';
+      let content='群邀请来自:\nQQ:'+user.nickname+'('+session.event.user.id+')\n群聊:'+guild.group_name+'('+session.event.channel.id+')';
       //主人id
       // let masterId=session.app.plugin(name).runtime.config.masterId
       let masterId=config['masterId']
@@ -80,8 +83,6 @@ export function apply(ctx: Context,config:Config) {
         from_channel_id: session.event.channel.id,
         time: new Date(),
       })
-    }
-    sendmsg()
   })
   ctx.middleware((session, next) => {
     if (session.event.message.quote !=undefined && session.event.message.quote.user.id === session.bot.userId && session.event.message.quote.content.startsWith('群邀请来自:')) {
@@ -91,10 +92,14 @@ export function apply(ctx: Context,config:Config) {
       // 如果是群聊进行权限控制
       if(session.subtype==='group'&& !invite_roles[user_roles])return next();
       async function sendRequest() {      
+       //console.info(session)
         let replyContent=session.event.message.content;
-        if(session.subtype==='group'){
-          replyContent=replyContent.replaceAll('<at id="'+session.bot.user.id+'"/> ','');
+        if(session.event.subtype==='group'){
+          let atmsg='<at id=\"'+session.bot.user.id+'\" name=\"'+session.bot.user.username+'\"/> '
+          //console.info(atmsg)
+          replyContent=replyContent.replaceAll(atmsg,'');
         }
+       //console.info(replyContent)
         // if(replyContent.substring(0,1)===' ')replyContent=replyContent.substring(1);
         let botmsg=session.quote.content;
         let userId=botmsg.substring(botmsg.indexOf('(')+1,botmsg.indexOf(')'))
